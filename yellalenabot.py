@@ -2,7 +2,6 @@
  
 import tweepy, time, sys, random, mykeys, re
  
-#argfile = str(sys.argv[1])
 whatReplace = str(sys.argv[1])
 replaceWith = str(sys.argv[2])
 timer = int(str(sys.argv[3]))
