@@ -1,0 +1,51 @@
+#grid {
+    -fx-background-color: #1A2209;
+}
+
+#title {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, #989744 0%, #1A2209 200%);
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1.8em;
+}
+
+#label {
+    -fx-padding: 1em 0.5em 0.5em 0em;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #989744;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+#field {
+    -fx-padding: 0em 0.5em 0.5em 0em;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #1A2209;
+    -fx-background-color: #4C4C37;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-background-radius: 0;
+    -fx-background-color: #4C4C37;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #1A2209;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+.button:hover{
+    -fx-background-color: derive(#989744,30%);
+}
+ .button:pressed, .button:default:hover:pressed, .button:disabled, .button:default:disabled {
+  -fx-background-color: #989744;
+  -fx-text-fill: #2E2D00;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #fff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color,30%);
+}

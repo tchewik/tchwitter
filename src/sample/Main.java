@@ -1,0 +1,102 @@
+package sample;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.*;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        primaryStage.setTitle("tchwitter");
+        primaryStage.setScene(createScene());
+        primaryStage.show();
+    }
+
+    private int windowWidth = 400;
+    private int windowHeight = 300;
+    private Scene createScene(){
+        GridPane grid = new GridPane();
+        grid.setId("grid");
+        grid.setHgap(5);
+        grid.setVgap(5);
+
+        Text title = new Text("Разберёшься как-нибудь");
+        title.setId("title");
+        grid.add(title, 0,  0, 2, 1);
+
+        grid.setAlignment(Pos.BASELINE_CENTER);
+        Label trashLabel = new Label("Найти:");
+        trashLabel.setId("label");
+        grid.add(trashLabel, 0, 2);
+
+        TextField textFind = new TextField();
+        textFind.setId("field");
+        grid.add(textFind, 1, 2);
+
+        Label putLabel = new Label("Заменить:");
+        putLabel.setId("label");
+        grid.add(putLabel, 0, 3);
+
+        TextField textReplace = new TextField();
+        textReplace.setId("field");
+        grid.add(textReplace, 1, 3);
+
+        Label timerLabel = new Label("Таймер (в минутах):");
+        timerLabel.setId("label");
+        grid.add(timerLabel, 0, 4);
+
+        TextField textTimer = new TextField();
+        textTimer.setId("field");
+        grid.add(textTimer, 1, 4);
+
+        Label timesLabel = new Label("Сколько раз:");
+        timesLabel.setId("label");
+        grid.add(timesLabel, 0, 5);
+
+        TextField textHowM = new TextField();
+        textHowM.setId("field");
+        grid.add(textHowM, 1, 5);
+
+        Button startBtn = new Button("Стартуем!");
+        startBtn.setId("btn");
+        startBtn.setMinSize(windowWidth, 1);
+        startBtn.setOnAction(event -> {
+                    try {
+                        String whatReplace =  textFind.getText();
+                        String replaceWith = textReplace.getText();
+                        int time = Integer.parseInt(textTimer.getText());
+                        time = time * 60;
+                        String timer = Integer.toString(time);
+                        String times = textHowM.getText();
+                        ProcessBuilder pb = new ProcessBuilder("python","yellalenabot.py",""+whatReplace,""+replaceWith,""+timer,""+times);
+                        Process p = pb.start();
+
+                    }catch(IOException e){
+                        System.out.println(e);
+                    }
+                });
+        grid.add(startBtn, 0, 6, 2, 1);
+
+        Scene scene = new Scene(grid, windowWidth, windowHeight);
+        scene.getStylesheets().add("style.css");
+        return scene;
+    }
+
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
