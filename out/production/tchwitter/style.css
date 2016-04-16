@@ -16,6 +16,14 @@
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
+#labelOpt {
+    -fx-padding: 1em 0.5em 0.5em 0em;
+    -fx-font-size: 1.3em;
+    -fx-text-fill: #989766;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-style: italic;
+}
+
 #field {
     -fx-padding: 0em 0.5em 0.5em 0em;
     -fx-font-size: 1.3em;

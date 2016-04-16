@@ -24,8 +24,8 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private int windowWidth = 400;
-    private int windowHeight = 300;
+    private int windowWidth = 550;
+    private int windowHeight = 340;
     private Scene createScene(){
         GridPane grid = new GridPane();
         grid.setId("grid");
@@ -69,6 +69,14 @@ public class Main extends Application {
         textHowM.setId("field");
         grid.add(textHowM, 1, 5);
 
+        Label escapeLabel = new Label("(Опционально) Исключить слово:");
+        escapeLabel.setId("labelOpt");
+        grid.add(escapeLabel, 0, 6);
+
+        TextField textEscape = new TextField();
+        textEscape.setId("field");
+        grid.add(textEscape, 1, 6);
+
         Button startBtn = new Button("Стартуем!");
         startBtn.setId("btn");
         startBtn.setMinSize(windowWidth, 1);
@@ -80,14 +88,20 @@ public class Main extends Application {
                         time = time * 60;
                         String timer = Integer.toString(time);
                         String times = textHowM.getText();
-                        ProcessBuilder pb = new ProcessBuilder("python","yellalenabot.py",""+whatReplace,""+replaceWith,""+timer,""+times);
-                        Process p = pb.start();
-
+                        String escape = textEscape.getText();
+                        if (escape.isEmpty()) {
+                            ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times);
+                            Process p = pb.start();
+                        }
+                        else {
+                            ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
+                            Process p = pb.start();
+                        }
                     }catch(IOException e){
                         System.out.println(e);
                     }
                 });
-        grid.add(startBtn, 0, 6, 2, 1);
+        grid.add(startBtn, 0, 7, 2, 1);
 
         Scene scene = new Scene(grid, windowWidth, windowHeight);
         scene.getStylesheets().add("style.css");

@@ -6,6 +6,10 @@ whatReplace = str(sys.argv[1])
 replaceWith = str(sys.argv[2])
 timer = int(str(sys.argv[3]))
 times = int(str(sys.argv[4]))
+if len(sys.argv) == 6:
+	escapeword = str(sys.argv[5])
+else:
+	escapeword = "ESCAPEWORD"
  
 #enter the corresponding information from your Twitter application:
 CONSUMER_KEY = mykeys.CONSUMER_KEY
@@ -24,12 +28,13 @@ link = re.compile('https://[a-z, 0-9, ./]*')
 tweet = tweepy.Cursor(api.search, q=whatReplace).items(times)
  
 for tw in tweet:
-    txt=''
-    tweetText = toReplace.sub(replaceWith, tw.text)
-    for word in tweetText.split():
-        exclusions = (reply.match(word) or word=='RT' or hashtag.match(word) or link.match(word))
-        if not exclusions:
-            txt+=(word+' ')
- 
-    api.update_status(txt.lower()) 
-    time.sleep(timer)
+	if not (escapeword in tw.text):
+	    txt=''
+	    tweetText = toReplace.sub(replaceWith, tw.text)
+	    for word in tweetText.split():
+	        exclusions = (reply.match(word) or word=='RT' or hashtag.match(word) or link.match(word))
+	        if not exclusions:
+	            txt+=(word+' ')
+	 
+	    api.update_status(txt.lower()) 
+	    time.sleep(timer)
