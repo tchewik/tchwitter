@@ -84,9 +84,9 @@ public class Main extends Application {
                     try {
                         String whatReplace =  textFind.getText();
                         String replaceWith = textReplace.getText();
-                        int time = Integer.parseInt(textTimer.getText());
+                        double time = Double.parseDouble(textTimer.getText());
                         time = time * 60;
-                        String timer = Integer.toString(time);
+                        String timer = Integer.toString((int)time);
                         String times = textHowM.getText();
                         String escape = textEscape.getText();
                         if (escape.isEmpty()) {
