@@ -34,11 +34,12 @@ for tw in tweet:
 	    txt=''
 	    tweetText = toReplace.sub(replaceWith, tw.text)
 	    for word in tweetText.split():
+	    	if len(txt + word) > 139:
+	        	break
 	        exclusions = (reply.match(word) or word=='RT' or hashtag.match(word) or link.match(word) or ("http" in word) or ("#" in word))
 	        if not exclusions:
 	            txt+=(word+' ')
-	        if len(txt)>= 139:
-	        	break
+	        
 	    api.update_status(txt.lower()) 
 	    time.sleep(timer)
 	    counter += 1
