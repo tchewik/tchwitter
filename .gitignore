@@ -48,3 +48,8 @@ Temporary Items
 
 # My own twitter keys
 *mykeys*
+
+# logs
+config.xml
+
+.idea/artifacts/
