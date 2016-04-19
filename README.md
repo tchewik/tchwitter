@@ -1,8 +1,12 @@
-# tchwitter
+$ cd ./trial
+$ pip install tweepy
+$ geany mykeys.py
 
-Содержимое файла mykeys.py, который надо создать в корневой папке и заполнить собственными значениями:
+# https://apps.twitter.com/ 
 
-CONSUMER_KEY='...'
-CONSUMER_SECRET = '...'
-ACCESS_KEY = '...'
-ACCESS_SECRET = '...'
+	CONSUMER_KEY='...'	# Consumer Key
+	CONSUMER_SECRET = '...' # Consumer Secret
+	ACCESS_KEY = '...' # Access Token
+	ACCESS_SECRET = '...' # Access Token Secret
+
+$ java -jar tchwitter.jar
