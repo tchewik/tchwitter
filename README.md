@@ -1,8 +1,8 @@
-$ cd ./trial
-$ pip install tweepy
-$ geany mykeys.py
+$ cd ./trial \
+$ pip install tweepy \
+$ geany mykeys.py \
 
-# https://apps.twitter.com/ 
+https://apps.twitter.com/ 
 
 	CONSUMER_KEY='...'	# Consumer Key
 	CONSUMER_SECRET = '...' # Consumer Secret
