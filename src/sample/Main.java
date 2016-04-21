@@ -97,6 +97,8 @@ public class Main extends Application {
                             ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
                             Process p = pb.start();
                         }
+                        String out = "python3" + " " + "yellalenabot.py" + " " + whatReplace + " " + replaceWith + " " + timer + " " + times;
+                        System.out.println(out);
                     }catch(IOException e){
                         System.out.println(e);
                     }
@@ -107,8 +109,6 @@ public class Main extends Application {
         scene.getStylesheets().add("style.css");
         return scene;
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
