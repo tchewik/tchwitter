@@ -22,9 +22,9 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
  
 toReplace = re.compile(re.escape(whatReplace), re.IGNORECASE)
-reply = re.compile('@[A-z]*')
-hashtag = re.compile('#[A-z]*')
-link = re.compile('https://[a-z, 0-9, ./]*')
+reply = re.compile('@.')
+hashtag = re.compile('#.')
+link = re.compile('https?://[a-z, 0-9, ./]*')
  
 tweet = tweepy.Cursor(api.search, q=whatReplace).items(times + blunder)
 
