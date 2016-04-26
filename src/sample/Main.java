@@ -89,15 +89,10 @@ public class Main extends Application {
                         String timer = Integer.toString((int)time);
                         String times = textHowM.getText();
                         String escape = textEscape.getText();
-                        if (escape.isEmpty()) {
-                            ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times);
-                            Process p = pb.start();
-                        }
-                        else {
-                            ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
-                            Process p = pb.start();
-                        }
-                    }catch(IOException e){
+                        if (escape.isEmpty()) escape = " ";
+                        ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
+                        Process p = pb.start();
+                    } catch(Exception e){
                         System.out.println(e);
                     }
                 });
@@ -107,8 +102,6 @@ public class Main extends Application {
         scene.getStylesheets().add("style.css");
         return scene;
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
