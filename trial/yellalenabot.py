@@ -1,46 +1,72 @@
-# -*- coding: utf-8 -*-
- 
-import tweepy, time, sys, random, mykeys, re
- 
-whatReplace = str(sys.argv[1])
-replaceWith = str(sys.argv[2])
-timer = int(str(sys.argv[3]))
-times = int(str(sys.argv[4]))
-if len(sys.argv) == 6:
-	escapeword = str(sys.argv[5])
-else:
-	escapeword = "ESCAPEWORD"
-blunder = 4
- 
-#enter the corresponding information from your Twitter application:
+import tweepy, sys, time, re, mykeys
+
 CONSUMER_KEY = mykeys.CONSUMER_KEY
 CONSUMER_SECRET = mykeys.CONSUMER_SECRET
 ACCESS_KEY = mykeys.ACCESS_KEY
 ACCESS_SECRET = mykeys.ACCESS_SECRET
+
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
- 
-toReplace = re.compile(re.escape(whatReplace), re.IGNORECASE)
-reply = re.compile('@.')
-hashtag = re.compile('#.')
-link = re.compile('https?://[a-z, 0-9, ./]*')
- 
-tweet = tweepy.Cursor(api.search, q=whatReplace).items(times + blunder)
 
-counter = 0
-for tw in tweet:
-	if not (escapeword in tw.text.lower()):
-		txt=''
-		tweetText = toReplace.sub(replaceWith, tw.text)
-		for word in tweetText.split():
-			if len(txt + word) > 139:
-				break
-			exclusions = (reply.match(word) or word=='RT' or hashtag.match(word) or link.match(word) or ("http" in word) or ("#" in word))
-			if not exclusions:
-				txt+=(word+' ')
-		api.update_status(txt.lower())
-		time.sleep(timer)
-		counter += 1
-		if counter == times:
-			break
+if len(sys.argv) == 6:
+	escapeword = str(sys.argv[5])
+else:
+	escapeword = "ESCAPEWORD"
+
+def clearTweet(tweetText, result):
+	#----------------------- tweet cleaners ---------------------------
+	reply = re.compile('@[A-z]*')
+	hashtag = re.compile('#[A-z]*')
+	link = re.compile('https://[a-z, 0-9, ./]*')
+	#------------------------------------------------------------------
+	for word in tweetText.split():
+		exclusions = (reply.match(word) or word=='RT' or hashtag.match(word) or link.match(word))
+		if not exclusions:
+			result+=(word+' ')
+
+	result = re.sub("\n", ".", result)
+
+	return result
+
+
+def ShortenTweet(Tweet):
+	Tweet = re.sub(', ', ',', Tweet)
+	Tweet = re.sub(' - ', '-', Tweet)
+
+	while(len(Tweet)>140):
+		while (Tweet[-1]!='.' and Tweet!=''):
+			Tweet = Tweet[:-1]
+
+
+def Tweet(stringToReplace, replacement):
+	numbers = sys.argv[4] + sys.argv[3]
+	numbers = re.findall('\d+', numbers)
+	toReplace = re.compile(re.escape(str(stringToReplace)), re.IGNORECASE)
+	tweet = tweepy.Cursor(api.search, q=('"'+stringToReplace+'"')).items(int(numbers[0])) # !CHOOSE HOW MANY TWEETS DO YOU WANT TO POST HERE
+
+	for tw in tweet:
+		if not (escapeword in tw.text.lower()):
+			txt=''
+			tweetText = toReplace.sub(replacement, tw.text)
+			txt = clearTweet(tweetText, txt)
+
+			if (len(txt)>140):
+				ShortenTweet(txt)
+			
+			try:
+				api.update_status(txt.lower())
+				try: 
+					with open('log.txt', 'a') as log:
+						log.write(" \n" + time.asctime() +" :: Posted a tweet: '" + txt + "' ")
+				except UnicodeEncodeError:
+					with open('log.txt', 'a') as log:
+						log.write(" \n" + time.asctime() +" :: Posted a tweet containing an emoji. ") # logging in ascii is no-good for cyrillic, so decided not to log "emoji" tweets at all
+
+				time.sleep(int(numbers[1])) # !CHOOSE THE PERIOD OF TWEETING HERE
+			except tweepy.error.TweepError as te:
+				with open('log.txt', 'a') as log:
+					log.write(" \n" + time.asctime() +" :: "+ str(te))
+
+if __name__=="__main__":
+	Tweet(sys.argv[1], sys.argv[2])
