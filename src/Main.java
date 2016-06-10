@@ -1,9 +1,5 @@
-package sample;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,13 +8,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.*;
-
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("tchwitter");
         primaryStage.setScene(createScene());
         primaryStage.show();
@@ -81,21 +74,21 @@ public class Main extends Application {
         startBtn.setId("btn");
         startBtn.setMinSize(windowWidth, 1);
         startBtn.setOnAction(event -> {
-                    try {
-                        String whatReplace =  textFind.getText();
-                        String replaceWith = textReplace.getText();
-                        double time = Double.parseDouble(textTimer.getText());
-                        time = time * 60;
-                        String timer = Integer.toString((int)time);
-                        String times = textHowM.getText();
-                        String escape = textEscape.getText();
-                        if (escape.isEmpty()) escape = " ";
-                        ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
-                        Process p = pb.start();
-                    } catch(Exception e){
-                        System.out.println(e);
-                    }
-                });
+            try {
+                String whatReplace =  textFind.getText();
+                String replaceWith = textReplace.getText();
+                double time = Double.parseDouble(textTimer.getText());
+                time = time * 60;
+                String timer = Integer.toString((int)time);
+                String times = textHowM.getText();
+                String escape = textEscape.getText();
+                if (escape.isEmpty()) escape = " ";
+                ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
+                Process p = pb.start();
+            } catch(Exception e){
+                System.out.println(e);
+            }
+        });
         grid.add(startBtn, 0, 7, 2, 1);
 
         Scene scene = new Scene(grid, windowWidth, windowHeight);
