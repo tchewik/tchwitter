@@ -73,27 +73,31 @@ public class Main extends Application {
         Button startBtn = new Button("Стартуем!");
         startBtn.setId("btn");
         startBtn.setMinSize(windowWidth, 1);
-        startBtn.setOnAction(event -> {
-            try {
-                String whatReplace =  textFind.getText();
-                String replaceWith = textReplace.getText();
-                double time = Double.parseDouble(textTimer.getText());
-                time = time * 60;
-                String timer = Integer.toString((int)time);
-                String times = textHowM.getText();
-                String escape = textEscape.getText();
-                if (escape.isEmpty()) escape = " ";
-                ProcessBuilder pb = new ProcessBuilder("python", "yellalenabot.py", whatReplace, replaceWith, timer, times, escape);
-                Process p = pb.start();
-            } catch(Exception e){
-                System.out.println(e);
-            }
-        });
+        startBtn.setOnAction(event -> twitting( textFind.getText(),
+                                                textReplace.getText(),
+                                                textTimer.getText(),
+                                                textHowM.getText(),
+                                                textEscape.getText()));
+
         grid.add(startBtn, 0, 7, 2, 1);
 
         Scene scene = new Scene(grid, windowWidth, windowHeight);
         scene.getStylesheets().add("style.css");
         return scene;
+    }
+
+    private void twitting(String whatReplace, String replaceWith, String textTimer, String textHowM, String textEscape) {
+        try {
+            int timer = (int)(60 * Double.parseDouble(textTimer));
+            int times = Integer.parseInt(textHowM);
+            String escape = textEscape.isEmpty() ? " " : textEscape;
+
+            String command = String.format("python", "yellalenabot.py %s %s %d %d %s", whatReplace, replaceWith, timer, times, escape);
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.start();
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     public static void main(String[] args) {
