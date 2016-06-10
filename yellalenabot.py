@@ -38,10 +38,10 @@ class Bot:
 
 
 	def Tweet(self, stringToReplace, replacement):
-		numbers = sys.argv[3] + sys.argv[4]
-		numbers = re.findall('\d+', numbers)
+		timer = int(sys.argv[3])
+		times = int(sys.argv[4])
 		toReplace = re.compile(re.escape(str(stringToReplace)), re.IGNORECASE)
-		tweets = tweepy.Cursor(self.api.search, q=('"'+stringToReplace+'"')).items(int(numbers[0])) # !CHOOSE HOW MANY TWEETS DO YOU WANT TO POST HERE
+		tweets = tweepy.Cursor(self.api.search, q=('"'+stringToReplace+'"')).items(times) # !CHOOSE HOW MANY TWEETS DO YOU WANT TO POST HERE
 
 		for tw in tweets:
 			tweetText = toReplace.sub(replacement, tw.text)
@@ -59,7 +59,7 @@ class Bot:
 					with open('log.txt', 'a') as log:
 						log.write(" \n" + time.asctime() +" :: Posted a tweet containing an emoji. ") # logging in ascii is no-good for cyrillic, so decided not to log "emoji" tweets at all
 
-				time.sleep(int(numbers[1])) # !CHOOSE THE PERIOD OF TWEETING HERE
+				time.sleep(timer) # !CHOOSE THE PERIOD OF TWEETING HERE
 			except tweepy.error.TweepError as te:
 				with open('log.txt', 'a') as log:
 					log.write(" \n" + time.asctime() +" :: "+ str(te))
