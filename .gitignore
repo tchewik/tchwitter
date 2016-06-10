@@ -53,5 +53,5 @@ Temporary Items
 config.xml
 *log*
 
-*.idea*
+.idea/
 *pycache*
