@@ -55,3 +55,4 @@ config.xml
 
 .idea/
 *pycache*
+*.iml
