@@ -1,5 +1,4 @@
-	$ cd ./trial 
-	$ pip install tweepy 
+	$ pip install tweepy
 	$ geany mykeys.py 
 
 https://apps.twitter.com/ 

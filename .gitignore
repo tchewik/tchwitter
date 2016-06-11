@@ -54,5 +54,6 @@ config.xml
 *log*
 
 .idea/
+out/
 *pycache*
 **.iml
