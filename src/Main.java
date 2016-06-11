@@ -89,11 +89,9 @@ public class Main extends Application {
     private void twitting(String whatReplace, String replaceWith, String textTimer, String textHowM, String textEscape) {
         try {
             int timer = (int)(60 * Double.parseDouble(textTimer));
-            int times = Integer.parseInt(textHowM);
             String escape = textEscape.isEmpty() ? " " : textEscape;
 
-            String command = String.format("python", "yellalenabot.py %s %s %d %d %s", whatReplace, replaceWith, timer, times, escape);
-            ProcessBuilder pb = new ProcessBuilder(command);
+            ProcessBuilder pb = new ProcessBuilder("python3", "yellalenabot.py", whatReplace, replaceWith, ""+timer, textHowM, escape);
             pb.start();
         } catch(Exception e){
             System.out.println(e);
