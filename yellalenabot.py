@@ -43,6 +43,8 @@ class Bot:
         tweets = tweepy.Cursor(self.api.search, q=('"' + stringToReplace + '"')).items(
             times)  # !CHOOSE HOW MANY TWEETS DO YOU WANT TO POST HERE
 
+        with open('log.txt', 'a') as log:
+            log.write("\n" + time.asctime() + " :: Input: '" + str(stringToReplace) + "', replace with: '" + str(replacement) + "' ")
         for tw in tweets:
             tweetText = toReplace.sub(replacement, tw.text)
             txt = self.clearTweet(tweetText)
@@ -69,3 +71,6 @@ class Bot:
 if __name__ == "__main__":
     replacer = Bot()
     replacer.Tweet(sys.argv[1], sys.argv[2])
+    with open('log.txt', 'a') as log:
+        log.write(" \n" + time.asctime() + " :: --------------------------------END--------------------------------")
+        
